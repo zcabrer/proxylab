@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+
+<%- include('./partials/head.ejs') %>
+
+  <body>
+
+    <!-- navigation -->
+    <%- include('./partials/navbar.ejs') %>
+
+
+      <!-- Main Content -->
+      <div class="container">
+        <div class="row content">
+
+          <div class="col-md-10 p-4 bg-body-tertiary rounded-3">
+            <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1">
+              <div class="col">
+                <div class="card mb-3">
+                  <div class="row g-0">
+                    <div class="card-body">
+                      <form action="/login" method="post">
+                        <div class="mb-3 d-flex justify-content-center align-items-center">
+                          <label for="username" class="form-label me-2">Username:</label>
+                          <input type="text" class="form-control w-25" id="username" name="username" required>
+                        </div>
+                        <div class="mb-3 d-flex justify-content-center align-items-center">
+                          <label for="password" class="form-label me-2">Password:</label>
+                          <input type="password" class="form-control w-25" id="password" name="password" required>
+                        </div>
+                        <% if (error) { %>
+                          <div class="alert alert-danger" role="alert">
+                            <%= error %>
+                          </div>
+                          <% } %>
+                            <div class="d-flex justify-content-center mt-3">
+                              <button type="submit" class="btn btn-primary btn-lg">Login</button>
+                            </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <div class="card mb-3">
+                  <div class="row g-0">
+                    <div class="card-body">
+                        <p class="card-text">
+                          Login to access administrative tools and adjust server settings such as:
+                        </p>
+                        <ul class="list-unstyled">
+                          <li>• Configuring TLS</li>
+                          <li>• Collecting server packet captures</li>
+                          <li>• Viewing live HTTP request logs</li>
+                          <li>• And more...</li>
+                        </ul>
+                        <p class="card-text">
+                          To access these administrative tools, you'll need to deploy your own version of the webapp. Follow the steps provided at the 
+                          <a href="https://github.com/zcabrer/proxylab/tree/main" target="_blank">GitHub project location</a>.
+                        </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- scripts -->
+      <%- include('./partials/scripts.ejs') %>
+
+  </body>
+
+</html>

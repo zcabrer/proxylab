@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+
+<%- include('../partials/head.ejs') %>
+
+    <body>
+
+        <!-- navigation -->
+        <%- include('../partials/navbar.ejs') %>
+
+
+            <!-- left navbar -->
+            <div class="container">
+                <div class="row content">
+                    <%- include('../partials/leftnav-config.ejs') %>
+
+                        <!-- Main Content -->
+                        <div class="col-md-10">
+                            <!-- Description -->
+                            <h4>Configure HTTPS</h4>
+                            <hr />
+                            <p>
+                                To enable HTTPS, upload a password protected .pfx file and the associated password. For the server to return the full certificate chain (leaf, intermediate, root), ensure the .pfx includes the full bundled chain. Manual server restart is required for changes to take effect. If HTTPS is already configured and a new certificate is uploaded, the existing certificate is replaced and deleted.
+                            </p>
+
+                            <!-- Upload -->
+                            <div class="mb-3">
+                                <label for="pfxInput" class="form-label">PFX file</label>
+                                <input class="form-control" type="file" id="pfx" name="pfx">
+                            </div>
+                            <div class="mb-3">
+                                <label for="passwordInput" class="form-label">Password</label>
+                                <input class="form-control" type="password" id="password" name="password">
+                            </div>
+                            <!-- Submit Button -->
+                            <button type="button" class="btn btn-primary mt-2" id="submitUploadButton">
+                                Upload
+                            </button>
+                            <!-- Response -->
+                            <p id="uploadResponse" class="mt-3" style="display: none"></p>
+                        </div>
+                </div>
+            </div>
+            </div>
+            </div>
+
+            <!-- scripts -->
+            <%- include('../partials/scripts.ejs') %>
+                <script src="../js/tls.js"></script>
+
+    </body>
+
+</html>

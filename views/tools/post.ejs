@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<%- include('../partials/head.ejs') %>
+
+<body>
+  <!-- navigation -->
+  <%- include('../partials/navbar.ejs') %>
+
+  <!-- left navbar -->
+  <div class="container">
+    <div class="row content">
+      <%- include('../partials/leftnav.ejs') %>
+
+      <div class="col-md-10">
+        <!-- Header/Description -->
+        <h4>Post Body</h4>
+        <hr />
+        <p>
+          Use this tool to submit an HTTP POST to the server. Select the
+          content-type, input the body content, and hit submit to send it to
+          the server. The server will echo back the response body content and
+          display the content size in bytes.
+        </p>
+
+        <!-- Content Type dropdown -->
+        <h5 class="mt-5">Content Type</h5>
+        <select class="form-select" aria-label="Content Type" id="contentTypeSelect">
+          <option value="" disabled selected>Select content type</option>
+          <option value="application/json">application/json</option>
+          <option value="application/xml">application/xml</option>
+          <option value="application/x-www-form-urlencoded">
+            application/x-www-form-urlencoded
+          </option>
+          <option value="application/xhtml+xml">application/xhtml+xml</option>
+          <option value="multipart/form-data">multipart/form-data</option>
+          <option value="text/plain">text/plain</option>
+          <option value="text/csv">text/csv</option>
+          <option value="text/javascript">text/javascript</option>
+          <option value="text/html">text/html</option>
+          <option value="text/css">text/css</option>
+          <option value="other">Other...</option>
+        </select>
+
+        <!-- Custom Content Type input if Other is selected from dropdown -->
+        <div id="customContentType" class="mt-3" style="display: none">
+          <label for="customTypeInput" class="form-label">Custom Content Type</label>
+          <input type="text" id="customTypeInput" class="form-control" placeholder="Enter custom content type" />
+        </div>
+
+        
+        <!-- Examples of Content Type -->
+        <h6 class="mt-5" id="exampleHeader" style="display: none">Example</h6>
+        <p id="exampleGuidance" class="mt-3" style="display: none"></p>
+        <pre id="exampleContent" class="form-control" style="height: auto; display: none"></pre>
+        
+        <!-- Boundary input for multipart/form-data -->
+        <div id="boundaryInput" class="mt-3" style="display: none">
+          <label for="boundary" class="form-label">Boundary</label>
+          <input type="text" id="boundary" class="form-control" placeholder="Enter boundary" />
+        </div>
+
+        <!-- Body Content textarea input -->
+        <h5 class="mt-5">Body Content</h5>
+        <textarea id="bodyContent" class="form-control" rows="10" placeholder="Enter body content here"></textarea>
+
+        <!-- Submit Button -->
+        <button type="button" class="btn btn-primary mt-2" id="submitBodyButton">
+          Submit
+        </button>
+
+        <!-- Content Length Display -->
+        <div id="contentLengthDisplay" class="mt-3" style="display: none">
+          <h5>Content Length</h5>
+          <p id="contentLength"></p>
+        </div>
+
+        <!-- POST Response Display -->
+        <div id="responseDisplay" class="mt-5" style="display: none">
+          <h5>Response</h5>
+          <pre id="responseContent"></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- scripts -->
+  <%- include('../partials/scripts.ejs') %>
+  <script src="../js/post.js"></script>
+</body>
+
+</html>

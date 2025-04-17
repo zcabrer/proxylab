@@ -1,0 +1,23 @@
+<div class="col-sm-2">
+    <h4>Tools</h4>
+    <ul class="nav nav-pills flex-column">
+        <li class="nav-item">
+            <a class="nav-link<% if (typeof headerActive !== 'undefined' && headerActive) { %> active<% } %>" aria-current="page" href="/tools/headers">Headers</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link<% if (typeof postActive !== 'undefined' && postActive) { %> active<% } %>" href="/tools/post">Post Body</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link<% if (typeof querystringActive !== 'undefined' && querystringActive) { %> active<% } %>" href="/tools/querystring">Query String</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link<% if (typeof filesActive !== 'undefined' && filesActive) { %> active<% } %>" href="/tools/files">Upload / Download</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link<% if (typeof timeoutActive !== 'undefined' && timeoutActive) { %> active<% } %>" href="/tools/timeout">Timeout</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link<% if (typeof httpstatusActive !== 'undefined' && httpstatusActive) { %> active<% } %>" href="/tools/httpstatus">HTTP Status Code Generator</a>
+        </li>
+    </ul>
+</div>

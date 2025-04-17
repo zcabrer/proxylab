@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<%- include('../partials/head.ejs') %>
+
+<body>
+  <!-- navigation -->
+  <%- include('../partials/navbar.ejs') %>
+
+  <!-- left navbar -->
+  <div class="container">
+    <div class="row content">
+      <%- include('../partials/leftnav.ejs') %>
+
+      <div class="col-md-10">
+        <!-- Upload Files Description -->
+        <h4>Upload</h4>
+        <hr />
+        <p>
+            Test uploading files.
+        </p>
+        <ul>
+        <li>Files are stored in the cache and are temporary</li>
+        <li>Uses content-type multipart/form-data</li>
+        <li>Server will confirm a successful upload and output the upload size</li>
+        </ul>
+      
+
+        <!-- Upload -->
+          <div class="mb-3">
+            <label for="fileInput" class="form-label">Upload Files</label>
+            <input class="form-control w-50" type="file" id="fileInput" name="files" multiple>
+            <div class="form-text">5 file limit. Combined size should not exceed 1.5GB.</div>
+          </div>
+          <!-- File List -->
+          <div id="fileList" class="mt-2"></div>
+          <!-- Submit Button -->
+          <button type="button" class="btn btn-primary mt-2" id="submitUploadButton">
+            Upload
+          </button>
+          <!-- Upload Duration Text -->
+          <p id="uploadDurationText" class="mt-2"></p>
+          <!-- Response -->
+          <p id="uploadResponse" class="mt-3" style="display: none"></p>
+        <!-- Content Length Display -->
+        <div id="contentLengthDisplay" class="mt-3" style="display: none">
+          <h5>Content Length</h5>
+          <p id="contentLength"></p>
+        </div>
+        <!-- Download Files Description -->
+        <h4 class="mt-5">Download</h4>
+        <hr />
+        <p>
+            Test downloading files.
+        </p>
+        <ul>
+          <li>When Download is clicked, the server will perform a GET request to files/downloads/<i>selectedDownloadSize</i>.txt.</li>
+          <li>The server will return a random text file of the specified size.</li>
+          <li>The file will be served with the content-type text/plain.</li>
+          </ul>
+        <!-- File Size Picker -->
+        <div class="mb-3">
+          <label for="fileSizePicker" class="form-label">Select File Size</label>
+          <select class="form-select w-25" id="fileSizePicker">
+            <option value="1MB">1MB</option>
+            <option value="10MB">10MB</option>
+            <option value="100MB">100MB</option>
+            <option value="1GB">1GB</option>
+          </select>
+        </div>
+        <!-- Download Button -->
+        <button type="button" class="btn btn-success mt-2" id="downloadButton">
+          Download
+        </button>
+          <!-- Progress Text -->
+          <p id="downloadProgressText" class="mt-2"></p>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+  <!-- scripts -->
+  <%- include('../partials/scripts.ejs') %>
+  <script src="../js/files.js"></script>
+</body>
+
+</html>

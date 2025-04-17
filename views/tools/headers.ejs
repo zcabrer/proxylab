@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+
+<%- include('../partials/head.ejs') %>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+    <body>
+
+        <!-- navigation -->
+        <%- include('../partials/navbar.ejs') %>
+
+
+            <!-- left navbar -->
+            <div class="container">
+                <div class="row content">
+                    <%- include('../partials/leftnav.ejs') %>
+
+                        <!-- Main Content -->
+                        <div class="col-md-10">
+                            <!-- General Headers -->
+                            <h4>General</h4>
+                            <hr class="border border-primary">
+                            <ul class="list-unstyled mb-4">
+                                <li><strong>URL:</strong>
+                                    <%= url %>
+                                </li>
+                                <li><strong>Status:</strong>
+                                    <%= status %>
+                                </li>
+                                <li><strong>Method:</strong>
+                                    <%= method %>
+                                </li>
+                                <li><strong>Remote Address:</strong>
+                                    <%= remoteAddress %>
+                                </li>
+                            </ul>
+                            <!-- Request Headers -->
+                            <h4>Request <span style="font-size: small;">(as seen by the server)</span></h4>
+                            <hr class="border border-primary">
+                            <ul class="list-unstyled mb-4">
+                                <% for (let key in reqHeaders) { %>
+                                    <li><strong>
+                                            <%= key %>:
+                                        </strong>
+                                        <%= reqHeaders[key] %>
+                                    </li>
+                                    <% } %>
+                            </ul>
+                            <!-- Response Headers -->
+                            <h4 class="mt-5">Response <span style="font-size: small;">(sent by the
+                                    server)</span></h4>
+                            <hr class="border border-primary">
+
+                            <ul class="list-unstyled">
+                                <% for (let key in respHeaders) { %>
+                                    <li><strong>
+                                            <%= key %>:
+                                        </strong>
+                                        <%= respHeaders[key] %>
+                                    </li>
+                                    <% } %>
+                            </ul>
+
+
+
+                            <!-- Add response headers -->
+                            <h4 class="mt-5">Add Headers</h4>
+                            <hr class="border border-primary">
+                            <div class="content p-2 bg-body-tertiary rounded-3">
+                                <h5>Request</h5>
+                                <div id="requestHeaderFieldsContainer">
+                                    <!-- Header fields will be appended here by JavaScript -->
+                                </div>
+                                <div class="row d-flex justify-content-end">
+                                    <div class="col-sm-1">
+                                        <button type="button" class="btn btn-secondary btn-sm mt-2 w-100"
+                                            id="addRequestHeaderButton"><i class="bi bi-plus-lg"></i></button>
+                                    </div>
+                                </div>
+                                <h5>Response</h5>
+                                <div id="responseHeaderFieldsContainer">
+                                    <!-- Header fields will be appended here by JavaScript -->
+                                </div>
+                                <div class="row d-flex justify-content-end">
+                                    <div class="col-sm-1">
+                                        <button type="button" class="btn btn-secondary btn-sm mt-2 mb-4 w-100"
+                                            id="addResponseHeaderButton"><i class="bi bi-plus-lg"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Shared submit button -->
+                            <div class="row mt-2 mb-5">
+                                <div class="col-sm-1 col-lg-2 text-center">
+                                    <button type="button" class="btn btn-primary btn-md w-100"
+                                        id="submitHeadersButton">Submit</button>
+                                </div>
+                                <div class="col-sm-1 col-lg-2 text-center">
+                                    <a href="/tools/headers"><button type="button"
+                                            class="btn btn-primary btn-md w-100"
+                                            id="resetHeadersButton">Reset</button></a>
+                                </div>
+                            </div>
+
+
+                        </div>
+                </div>
+            </div>
+
+
+            <!-- scripts -->
+            <%- include('../partials/scripts.ejs') %>
+                <script src="../js/headers.js"></script>
+
+    </body>
+
+</html>

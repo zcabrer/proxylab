@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+
+<%- include('../partials/head.ejs') %>
+
+<body>
+
+    <!-- navigation -->
+    <%- include('../partials/navbar.ejs') %>
+
+
+    <!-- Main Content -->
+     <div class="container">
+     <div class="row content">
+      <%- include('../partials/leftnav.ejs') %>
+
+    <div class="col-md-10 p-4 bg-body-tertiary rounded-3">
+            <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1">
+                <div class="col">
+                    <div class="card mb-3">
+                        <div class="row g-0">
+                          <div class="col-md-4">
+                            <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
+                              <img src="/images/headers.png" class="img-fluid rounded-start mx-auto d-block mt-2 mb-2" style="max-height: 200px; max-width: 200px;" alt="...">                            
+                            </div>
+                          </div>
+                          <div class="col-md-8">
+                            <div class="card-body">
+                              <h5 class="card-title">Headers</h5>
+                              <p class="card-text">Inspect and modify request and response headers. Ideal for testing proxy tools, header rewrites, and header injections like x-forwarded-for and x-forwarded-port.</p>
+                              <a href="tools/headers"><button type="button" class="btn btn-primary">Try It</button></a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+                <div class="col">
+                    <div class="card mb-3">
+                        <div class="row g-0">
+                          <div class="col-md-4">
+                            <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
+                              <img src="/images/post.png" class="img-fluid rounded-start mx-auto d-block mt-2 mb-2" style="max-height: 200px; max-width: 200px;" alt="...">                            
+                            </div>
+                          </div>
+                          <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">Post Body</h5>
+                                <p class="card-text">Select the content type, view sample content, and input your own custom body to submit to the server.</p>
+                              <a href="tools/post"><button type="button" class="btn btn-primary">Try It</button></a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+                <div class="col">
+                    <div class="card mb-3">
+                        <div class="row g-0">
+                          <div class="col-md-4">
+                            <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
+                              <img src="/images/querystring.jpeg" class="img-fluid rounded-start mx-auto d-block mt-2 mb-2" style="max-height: 160px; max-width: 160px;" alt="...">                            
+                            </div>
+                          </div>
+                          <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">Query Strings</h5>
+                                <p class="card-text">Generate query string parameters in URLs. Perfect for testing how proxies handle query string manipulations.</p>
+                              <a href="tools/querystring"><button type="button" class="btn btn-primary">Try It</button></a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+                <div class="col">
+                    <div class="card mb-3">
+                        <div class="row g-0">
+                          <div class="col-md-4">
+                            <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
+                                <img src="/images/files.png" class="img-fluid rounded-start mx-auto d-block mt-2 mb-2" style="max-height: 160px; max-width: 160px;" alt="...">                            
+                            </div>
+                          </div>
+                          <div class="col-md-8">
+                            <div class="card-body">
+                              <h5 class="card-title">File Upload and Download</h5>
+                                <p class="card-text">Test the proxy's handling of file uploads and downloads. This tool is ideal for evaluating upload/download limits and performance.</p>
+                              <a href="tools/files"><button type="button" class="btn btn-primary">Try It</button></a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+                <div class="col">
+                    <div class="card mb-3">
+                        <div class="row g-0">
+                          <div class="col-md-4">
+                            <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
+                              <img src="/images/timeout.jpeg" class="img-fluid rounded-start mx-auto d-block mt-2 mb-2" style="max-height: 160px; max-width: 160px;" alt="...">                            
+                            </div>
+                          </div>
+                          <div class="col-md-8">
+                            <div class="card-body">
+                              <h5 class="card-title">Request Timeout</h5>
+                                <p class="card-text">Specify a timeout duration, and the server will delay its response accordingly. Useful for testing how your proxy handles delayed responses.</p>
+                              <a href="tools/timeout"><button type="button" class="btn btn-primary">Try It</button></a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+                <div class="col">
+                    <div class="card mb-3">
+                        <div class="row g-0">
+                          <div class="col-md-4">
+                            <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
+                              <img src="/images/httpstatus.jpeg" class="img-fluid rounded-start mx-auto d-block mt-2 mb-2" style="max-height: 160px; max-width: 160px;" alt="...">                            
+                            </div>
+                          </div>
+                          <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">HTTP Status Code Generator</h5>
+                                <p class="card-text">Enter an HTTP status code, and the server will respond with the specified status code. Useful for testing how proxies and clients handle various HTTP responses.</p>
+                              <a href="tools/httpstatus"><button type="button" class="btn btn-primary">Try It</button></a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+     </div>
+    </div>
+
+
+
+        <!-- scripts -->
+        <%- include('../partials/scripts.ejs') %>
+
+</body>
+
+</html>

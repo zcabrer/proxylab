@@ -1,0 +1,27 @@
+# Docker files
+.dockerignore
+Dockerfile
+
+# VSC dev environment
+.vscode
+
+# Mac Dev environment
+.DS_Store
+.devcontainer
+
+# Node modules
+node_modules/
+
+# Packet Capture Files
+*.pcap
+
+# Ignore large files
+1GB.txt
+100MB.txt
+
+# Certificates
+*.pfx
+
+# environment variables
+.env
+!.env.example

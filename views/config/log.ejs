@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+
+<%- include('../partials/head.ejs') %>
+
+    <body>
+
+        <!-- navigation -->
+        <%- include('../partials/navbar.ejs') %>
+
+
+            <!-- left navbar -->
+            <div class="container">
+                <div class="row content">
+                    <%- include('../partials/leftnav-config.ejs') %>
+
+                        <!-- Main Content -->
+                        <div class="col-md-10">
+                            <!-- Description -->
+                            <h4>Live Logs</h4>
+                            <hr />
+                            <p>
+                                View live logs from the server. This tool allows you to monitor the server's activity in real-time. Live Logs leverages WebSockets, so both the client and the proxy must support WebSocket connections.
+                            </p>
+
+                            <!-- Example Log Format -->
+                            <div class="alert alert-info" role="alert">
+                                <strong>Log format:</strong><br>
+                                date | remote-address | httpStatus | httpMethod | protocol | host | url | src-port | -> | dst-port | x-forwarded-for | x-forwarded-proto | user-agent | content-length | response-time
+                            </div>
+
+                            <!-- Log Display -->
+                            <div id="log-container" style="height: 600px; overflow-y: auto; background: #333; color: #fff; padding: 10px; border-radius: 5px;">
+                                <!-- Logs will appear here -->
+                            </div>
+                        </div>
+                </div>
+            </div>
+
+            <!-- scripts -->
+            <%- include('../partials/scripts.ejs') %>
+                <script src="../js/log.js"></script>
+
+    </body>
+
+</html>

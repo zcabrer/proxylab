@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+
+<%- include('../partials/head.ejs') %>
+
+<body>
+
+    <!-- navigation -->
+    <%- include('../partials/navbar.ejs') %>
+
+
+    <!-- Main Content -->
+     <div class="container">
+     <div class="row content">
+      <%- include('../partials/leftnav-config.ejs') %>
+
+      <div class="col-md-10 p-4 bg-body-tertiary rounded-3">
+        <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1">
+            <div class="col">
+                <div class="card mb-3">
+                    <div class="row g-0">
+                      <div class="col-md-4">
+                        <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
+                          <img src="/images/https.jpeg" class="img-fluid rounded-start mx-auto d-block mt-2 mb-2" style="max-height: 200px; max-width: 200px;" alt="...">                            
+                        </div>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card-body">
+                          <h5 class="card-title">HTTPS</h5>
+                            <p class="card-text">This tool allows you to upload your own certificate to enable HTTPS on the server, ensuring secure communication between clients and the server.</p>
+                          <a href="config/tls"><button type="button" class="btn btn-primary">Try It</button></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div class="col">
+                <div class="card mb-3">
+                    <div class="row g-0">
+                      <div class="col-md-4">
+                        <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
+                          <img src="/images/pcap.jpeg" class="img-fluid rounded-start mx-auto d-block mt-2 mb-2" style="max-height: 200px; max-width: 200px;" alt="...">                            
+                        </div>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">Packet Capture</h5>
+                            <p class="card-text">This tool allows you to capture network traffic on the server and save it as a PCAP file, which can be downloaded for analysis using tools like Wireshark.</p>
+                          <a href="config/pcap"><button type="button" class="btn btn-primary">Try It</button></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div class="col">
+                <div class="card mb-3">
+                    <div class="row g-0">
+                      <div class="col-md-4">
+                        <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
+                          <img src="/images/log.jpeg" class="img-fluid rounded-start mx-auto d-block mt-2 mb-2" style="max-height: 200px; max-width: 200px;" alt="...">                            
+                        </div>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">Live Logs</h5>
+                            <p class="card-text">This tool displays HTTP requests processed by the server in real-time using WebSockets, providing live insights into server activity.</p>
+                          <a href="config/log"><button type="button" class="btn btn-primary">Try It</button></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+     </div>
+    </div>
+
+
+
+        <!-- scripts -->
+        <%- include('../partials/scripts.ejs') %>
+
+</body>
+
+</html>

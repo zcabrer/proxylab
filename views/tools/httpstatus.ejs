@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<%- include('../partials/head.ejs') %>
+
+<body>
+  <!-- navigation -->
+  <%- include('../partials/navbar.ejs') %>
+
+  <!-- left navbar -->
+  <div class="container">
+    <div class="row content">
+      <%- include('../partials/leftnav.ejs') %>
+
+      <div class="col-md-10">
+        <!-- Description -->
+        <h4>HTTP Status Code Generator</h4>
+        <hr />
+        <p>
+            This tool allows users to input a valid HTTP status code, and the server will respond with the specified status code. It is particularly useful for testing and understanding how a proxy or client application handles specific responses from a backend server.
+        </p>
+
+        <!-- Form -->
+        <form id="httpstatus-form">
+          <div class="mb-3">
+            <label for="status-code" class="form-label">HTTP Status Code</label>
+            <input type="number" id="status-code" class="form-control" placeholder="Enter a valid HTTP status code (e.g., 200)" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Request Method</label>
+            <div>
+              <input type="radio" id="method-post" name="method" value="POST" checked>
+              <label for="method-post">POST</label>
+            </div>
+            <div>
+              <input type="radio" id="method-get" name="method" value="GET">
+              <label for="method-get">GET</label>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Generate</button>
+        </form>
+
+        <!-- Result -->
+        <div id="result-container" class="mt-3" style="white-space: pre-wrap;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- scripts -->
+  <%- include('../partials/scripts.ejs') %>
+  <script src="../js/httpstatus.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<%- include('../partials/head.ejs') %>
+
+<body>
+  <!-- navigation -->
+  <%- include('../partials/navbar.ejs') %>
+
+  <!-- left navbar -->
+  <div class="container">
+    <div class="row content">
+      <%- include('../partials/leftnav.ejs') %>
+
+      <div class="col-md-10">
+        <!-- Description -->
+        <h4>Timeout</h4>
+        <hr />
+        <p>
+            Set a timeout in seconds and click Initiate Request. This kicks off an HTTP GET to tools/timeout/submit?seconds=n (where n is the seconds value entered). The server will wait n seconds before replying. This is useful for testing how a proxy will handle long running requests.
+        </p>
+        <!-- Upload -->
+          <div class="mb-3">
+            <label for="timeoutInput" class="form-label mt-3">Timeout (seconds)</label>
+            <input type="number" class="form-control w-25" id="timeoutInput" name="timeout" min="1" step="1" required>
+            <div id="timeoutHelp" class="form-text">min 1 -  max 86,400 (24 hours)</div>
+          </div>
+          <!-- Submit Button -->
+          <div class="d-flex align-items-center">
+            <button type="button" class="btn btn-primary mt-2" id="submitTimeoutButton">
+              Initiate Request
+            </button>
+            <div class="d-flex justify-content-center w-75">
+              <span id="timerDisplay" class="mt-2" style="display: none;"></span>
+            </div>
+          </div>
+          <!-- Response -->
+          <p id="timeoutResponse" class="mt-3" style="display: none"></p>
+          <!-- Image Response -->
+          <div class="d-flex justify-content-center">
+            <img id="timeoutImage" class="mt-3" style="display: none; width: 300px; height: auto;" />
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- scripts -->
+  <%- include('../partials/scripts.ejs') %>
+  <script src="../js/timeout.js"></script>
+</body>
+
+</html>

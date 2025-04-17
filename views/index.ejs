@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+
+<%- include('partials/head.ejs') %>
+
+<body>
+    <!-- navigation -->
+    <%- include('partials/navbar.ejs') %>
+
+
+    <!-- welcome message -->
+    <div class="container p-5 mb-4 bg-body-tertiary rounded-3">
+        <div class="container text-center">
+            <div class="row mb-5">
+                <div class="col">
+                    <h1 class="display-5">Welcome to Proxy Lab!</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col">
+                    <p class="fs-5">This platform offers a suite of tools to test, validate, or
+                        troubleshoot layer 7
+                        proxies. Whether you're a network professional or an enthusiast, Proxy Lab helps ensure your proxy is behaving itself.</p>
+                </div>
+                <div class="col-sm-1"></div>
+                
+            </div>
+            <a href="/tools"><button type="button" class="btn btn-primary btn-lg mt-5">Browse Tools</button></a>
+        </div>
+    </div>
+
+
+    <!-- scripts -->
+    <%- include('partials/scripts.ejs') %>
+
+</body>
+
+</html>
