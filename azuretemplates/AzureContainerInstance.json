@@ -5,75 +5,60 @@
     "_generator": {
       "name": "bicep",
       "version": "0.34.44.8038",
-      "templateHash": "5961692524311753287"
+      "templateHash": "2524399718216289828"
     }
   },
-"parameters": {
-  "containerName": {
-    "type": "string",
-    "metadata": {
-      "description": "Name of the container instance. Must be unique within the resource group."
+  "parameters": {
+    "containerName": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "httpPort": {
+      "type": "int",
+      "defaultValue": 80
+    },
+    "httpsPort": {
+      "type": "int",
+      "defaultValue": 443
+    },
+    "username": {
+      "type": "string"
+    },
+    "password": {
+      "type": "securestring"
+    },
+    "enableLogging": {
+      "type": "bool"
+    },
+    "logAnalyticsWorkspaceId": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "logAnalyticsWorkspaceKey": {
+      "type": "securestring",
+      "defaultValue": ""
+    },
+    "useKeyVault": {
+      "type": "bool"
+    },
+    "keyVaultName": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "keyVaultCertificateName": {
+      "type": "string",
+      "defaultValue": ""
     }
   },
-  "location": {
-    "type": "string",
-    "metadata": {
-      "description": "Azure region where the container instance will be deployed (e.g., 'eastus', 'westus')."
-    }
-  },
-  "httpPort": {
-    "type": "int",
-    "defaultValue": 80,
-    "metadata": {
-      "description": "Port for HTTP traffic. Default is 80."
-    }
-  },
-  "httpsPort": {
-    "type": "int",
-    "defaultValue": 443,
-    "metadata": {
-      "description": "Port for HTTPS traffic. Default is 443."
-    }
-  },
-  "username": {
-    "type": "string",
-    "metadata": {
-      "description": "Username for the application admin tools."
-    }
-  },
-  "password": {
-    "type": "securestring",
-    "metadata": {
-      "description": "Secure password for the application admin tools."
-    }
-  },
-  "enableLogging": {
-    "type": "bool",
-    "metadata": {
-      "description": "Enable or disable logging to Log Analytics. Set to true to enable logging."
-    }
-  },
-  "logAnalyticsWorkspaceId": {
-    "type": "string",
-    "defaultValue": "",
-    "metadata": {
-      "description": "Log Analytics Workspace ID. Required if enableLogging is true. Locate the workspace ID in the Azure portal under the Log Analytics workspace -> Settings -> Agents management -> Workspace ID."
-    }
-  },
-  "logAnalyticsWorkspaceKey": {
-    "type": "securestring",
-    "defaultValue": "",
-    "metadata": {
-      "description": "Log Analytics Workspace Key. Required if enableLogging is true. Locate the workspace key in the Azure portal under the Log Analytics workspace -> Settings -> Agents management -> Primary Key."
-    }
-  }
-},
   "resources": [
     {
       "type": "Microsoft.ContainerInstance/containerGroups",
       "apiVersion": "2024-10-01-preview",
       "name": "[parameters('containerName')]",
       "location": "[parameters('location')]",
+      "identity": "[if(parameters('useKeyVault'), createObject('type', 'SystemAssigned'), null())]",
       "properties": {
         "sku": "Standard",
         "containers": [
@@ -107,6 +92,18 @@
                 {
                   "name": "HTTPSPORT",
                   "value": "[format('{0}', parameters('httpsPort'))]"
+                },
+                {
+                  "name": "USE_KEYVAULT",
+                  "value": "[format('{0}', parameters('useKeyVault'))]"
+                },
+                {
+                  "name": "KEYVAULT_NAME",
+                  "value": "[if(parameters('useKeyVault'), parameters('keyVaultName'), '')]"
+                },
+                {
+                  "name": "KEYVAULT_CERTIFICATE_NAME",
+                  "value": "[if(parameters('useKeyVault'), parameters('keyVaultCertificateName'), '')]"
                 }
               ],
               "resources": {
