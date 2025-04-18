@@ -43,7 +43,7 @@ ProxyLab is a versatile tool designed for testing and debugging HTTP/HTTPS reque
 
 You can use the following button to deploy the container to an Azure Container Instance (ACI) with a single click:
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fzcabrer%2Fproxylab%2Frefs%2Fheads%2Fmain%2Fazuretemplates%2FAzureContainerInstance.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fzcabrer%2Fproxylab%2Frefs%2Fheads%2Fdev%2Fazuretemplates%2FAzureContainerInstance.json)
 
 ## Contributing
 
