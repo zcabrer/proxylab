@@ -49,7 +49,7 @@ resource containerGroups_aci_proxylab_dev_name_resource 'Microsoft.ContainerInst
       {
         name: containerName
         properties: {
-          image: 'proxylab.azurecr.io/proxylab:v0.0.2'
+          image: 'proxylab.azurecr.io/proxylab:v0.0.3'
           ports: [
             {
               protocol: 'TCP'
