@@ -27,10 +27,22 @@ param logAnalyticsWorkspaceId string = ''
 @secure()
 param logAnalyticsWorkspaceKey string = ''
 
+// Enable or disable pulling certificates from Azure Key Vault.
+param useKeyVault bool
+
+// Azure Key Vault name. Required if useKeyVault is true.
+param keyVaultName string = ''
+
+// Azure Key Vault certificate name. Required if useKeyVault is true.
+param keyVaultCertificateName string = ''
+
 
 resource containerGroups_aci_proxylab_dev_name_resource 'Microsoft.ContainerInstance/containerGroups@2024-10-01-preview' = {
   name: containerName
   location: location
+  identity: useKeyVault ? {
+    type: 'SystemAssigned'
+  } : null
   properties: {
     sku: 'Standard'
     containers: [
@@ -64,6 +76,18 @@ resource containerGroups_aci_proxylab_dev_name_resource 'Microsoft.ContainerInst
             {
               name: 'HTTPSPORT'
               value: '${httpsPort}'
+            }
+            {
+              name: 'USE_KEYVAULT'
+              value: '${useKeyVault}'
+            }
+            {
+              name: 'KEYVAULT_NAME'
+              value: useKeyVault ? keyVaultName : ''
+            }
+            {
+              name: 'KEYVAULT_CERTIFICATE_NAME'
+              value: useKeyVault ? keyVaultCertificateName : ''
             }
           ]
           resources: {
