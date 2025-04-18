@@ -41,24 +41,36 @@ app.use('/config/log', logRoute);
 const httpServer = http.createServer(app);
 expressWs(app, httpServer);
 
+
 // Initialize WebSocket for HTTPS server
+const { getCertificateFromKeyVault } = require('./utils/keyVaultUtils'); // Import the Key Vault utility
 let httpsServer;
-try {
-  const pfxPath = path.join(__dirname, 'certs/certificate.pfx');
-  const password = process.env.PFX_PASSWORD;
-  const pfx = fs.readFileSync(pfxPath);
-  const credentials = { pfx: pfx, passphrase: password };
-  const httpsport = process.env.HTTPSPORT || 8443;
+(async () => {
+  try {
+    let credentials;
 
-  httpsServer = https.createServer(credentials, app);
-  expressWs(app, httpsServer);
+    if (process.env.USE_KEYVAULT === 'true' || process.env.USE_KEYVAULT === 'True') {
+      // Fetch certificate from Azure Key Vault
+      credentials = await getCertificateFromKeyVault();
+    } else {
+      // Use manually uploaded certificate
+      const pfxPath = path.join(__dirname, 'certs/certificate.pfx');
+      const password = process.env.PFX_PASSWORD;
+      const pfx = fs.readFileSync(pfxPath);
+      credentials = { pfx: pfx, passphrase: password };
+    }
 
-  httpsServer.listen(httpsport, () => {
-    console.log(`HTTPS Server is running on port ${httpsport}`);
-  });
-} catch (error) {
-  console.error('Could not start HTTPS server:', error.message);
-}
+    const httpsport = process.env.HTTPSPORT || 8443;
+    httpsServer = https.createServer(credentials, app);
+    expressWs(app, httpsServer);
+
+    httpsServer.listen(httpsport, () => {
+      console.log(`HTTPS Server is running on port ${httpsport}`);
+    });
+  } catch (error) {
+    console.error('Could not start HTTPS server:', error.message);
+  }
+})();
 
 // Start the HTTP server
 const httpport = process.env.HTTPPORT || 8080;
