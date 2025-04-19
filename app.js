@@ -27,6 +27,10 @@ app.use(morganMiddleware);
 // Use Morgan with the custom format for logStream
 app.use(morgan(format, { stream: logStream }));
 
+// Use version middleware to add the version to the EJS templates
+const versionMiddleware = require('./middleware/version');
+app.use(versionMiddleware);
+
 // Set up authentication session middleware
 const { sessionMiddleware } = require('./middleware/auth');
 app.use(sessionMiddleware);
