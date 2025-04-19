@@ -6,7 +6,7 @@ const path = require('path');
 const { isAuthenticated } = require('../../middleware/auth');
 
 router.get('/', isAuthenticated, (req, res) => {
-  res.render('config/tls', { title: 'Proxy Lab | Config', tlsActive: true });
+  res.render('admincenter/tls', { title: 'Proxy Lab | Admin Center', tlsActive: true });
 });
 
 // Configure Certificate storage

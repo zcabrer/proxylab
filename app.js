@@ -38,8 +38,8 @@ app.use(sessionMiddleware);
 // Import the router module
 app.use('/', router);
 
-const logRoute = require('./routes/config/log-route');
-app.use('/config/log', logRoute);
+const logRoute = require('./routes/admincenter/log-route');
+app.use('/admincenter/log', logRoute);
 
 // Initialize WebSocket for HTTP server
 const httpServer = http.createServer(app);

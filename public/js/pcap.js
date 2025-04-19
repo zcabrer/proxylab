@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const downloadButton = document.getElementById('downloadCaptureButton');
 
     startButton.addEventListener('click', function () {
-        fetch('/config/pcap/start', { method: 'POST' })
+        fetch('/admincenter/pcap/start', { method: 'POST' })
             .then(response => response.json())
             .then(data => {
                 captureStatus.style.display = 'block';
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     stopButton.addEventListener('click', function () {
-        fetch('/config/pcap/stop', { method: 'POST' })
+        fetch('/admincenter/pcap/stop', { method: 'POST' })
             .then(response => response.json())
             .then(data => {
                 captureStatus.style.display = 'block';
@@ -51,6 +51,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     downloadButton.addEventListener('click', function () {
-        window.location.href = '/config/pcap/download';
+        window.location.href = '/admincenter/pcap/download';
     });
 });

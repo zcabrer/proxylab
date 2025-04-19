@@ -9,7 +9,7 @@ const { logStream } = require('../../utils/logStream'); // Import the log stream
 expressWs(router);
 
 router.get('/', isAuthenticated, (req, res) => {
-    res.render('config/log', { title: 'Proxy Lab | Config', logActive: true });
+    res.render('admincenter/log', { title: 'Proxy Lab | Admin Center', logActive: true });
 });
 
 // WebSocket endpoint for streaming logs

@@ -6,7 +6,7 @@ document.getElementById('submitUploadButton').addEventListener('click', function
     formData.append('pfx', pfx[0]);
     formData.append('password', password);
 
-    fetch('/config/tls/certificateupload', {
+    fetch('/admincenter/tls/certificateupload', {
         method: 'POST',
         body: formData
     })

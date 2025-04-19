@@ -4,7 +4,7 @@ const { isAuthenticated } = require('../../middleware/auth');
 
 // Tools catalogue
 router.get('/', isAuthenticated, (req, res) => {
-    res.render('config/config', { title: 'Proxy Lab | Config'});
+    res.render('admincenter/admincenter', { title: 'Proxy Lab | Admin Center'});
 });
 
 // Import tool route handlers

@@ -7,7 +7,7 @@ const { spawn } = require('child_process');
 
 
 router.get('/', isAuthenticated, (req, res) => {
-    res.render('config/pcap', { title: 'Proxy Lab | Config', pcapActive: true });
+    res.render('admincenter/pcap', { title: 'Proxy Lab | Admin Center', pcapActive: true });
 });
 
 

@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const logContainer = document.getElementById('log-container');
     const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
-    const ws = new WebSocket(`${protocol}${window.location.host}/config/log/stream`);
+    const ws = new WebSocket(`${protocol}${window.location.host}/admincenter/log/stream`);
 
     ws.onmessage = (event) => {
         const reader = new FileReader();

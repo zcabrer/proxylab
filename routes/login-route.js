@@ -21,7 +21,7 @@ router.post('/', [
   const { username, password } = req.body;
   if (username === USER && password === PASSWORD) {
     req.session.isAuthenticated = true;
-    res.redirect('/config');
+    res.redirect('/admincenter');
   } else {
     res.render('login', { title: 'Login', error: 'Invalid username or password' });
   }
