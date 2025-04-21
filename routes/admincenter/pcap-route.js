@@ -17,7 +17,7 @@ const captureFilePath = path.join(__dirname, '../../captures/capture.pcap');
 
 router.post('/start', isAuthenticated, (req, res) => {
     if (isCapturing) {
-        return res.status(400).json({ status: 'error', message: 'Capture is already running.' });
+        return res.json({ status: 'success', message: 'Capture is already running.' });
     }
 
     console.log('Starting tcpdump...');
