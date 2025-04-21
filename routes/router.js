@@ -5,6 +5,7 @@ const router = express.Router();
 const home = require('./home-route');
 const tools = require('./tools/tools-route');
 const admincenter = require('./admincenter/admincenter-route');
+const docs = require('./docs-route');
 const login = require('./login-route');
 const logout = require('./logout-route');
 
@@ -12,6 +13,7 @@ const logout = require('./logout-route');
 router.use('/', home);
 router.use('/tools', tools);
 router.use('/admincenter', admincenter);
+router.use('/docs', docs);
 router.use('/login', login);
 router.use('/logout', logout);
 

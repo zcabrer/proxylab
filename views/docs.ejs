@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+
+<%- include('partials/head.ejs') %>
+
+<body>
+    <!-- navigation -->
+    <%- include('partials/navbar.ejs') %>
+
+
+    <!-- welcome message -->
+    <div class="container p-5 mb-4 bg-body-tertiary rounded-3">
+        <div class="container text-center">
+        <h1 class="display-4">Documentation</h1>
+        <p class="lead">Explore the resources below to learn more about the project and its tools.</p>
+        <hr class="my-4">
+
+        <div class="list-group">
+            <a href="https://github.com/zcabrer/proxylab" target="_blank" class="list-group-item list-group-item-action mb-3">
+                <h5 class="mb-1">Main GitHub Page</h5>
+                <p class="mb-1">Visit the main repository to explore the source code and contribute to the project.</p>
+            </a>
+            <a href="https://github.com/zcabrer/proxylab/releases" target="_blank" class="list-group-item list-group-item-action mb-3">
+                <h5 class="mb-1">App Releases</h5>
+                <p class="mb-1">Check out the latest releases and see what's new in the app.</p>
+            </a>
+            <a href="https://github.com/zcabrer/proxylab/wiki" target="_blank" class="list-group-item list-group-item-action">
+                <h5 class="mb-1">GitHub Wiki</h5>
+                <p class="mb-1">Access detailed documentation, tools guides, and <strong>deployment instructions</strong>.</p>
+            </a>
+        </div>
+        </div>
+    </div>
+
+
+    <!-- scripts -->
+    <%- include('partials/scripts.ejs') %>
+
+</body>
+
+</html>
