@@ -11,6 +11,10 @@ const http = require('http');
 require('dotenv').config();
 const morgan = require('morgan');
 
+// Generate the download files at startup
+const generateDownloadFiles = require('./utils/generateDownloads');
+generateDownloadFiles();
+
 // Set EJS as the template engine
 app.set('view engine', 'ejs');
 
@@ -45,6 +49,11 @@ app.use('/admincenter/log', logRoute);
 const httpServer = http.createServer(app);
 expressWs(app, httpServer);
 
+// Start the HTTP server
+const httpport = process.env.HTTPPORT || 8080;
+httpServer.listen(httpport, () => {
+  console.log(`HTTP Server is running on port ${httpport}`);
+});
 
 // Initialize WebSocket for HTTPS server
 const { getCertificateFromKeyVault } = require('./utils/keyVaultUtils'); // Import the Key Vault utility
@@ -75,9 +84,3 @@ let httpsServer;
     console.error('Could not start HTTPS server:', error.message);
   }
 })();
-
-// Start the HTTP server
-const httpport = process.env.HTTPPORT || 8080;
-httpServer.listen(httpport, () => {
-  console.log(`HTTP Server is running on port ${httpport}`);
-});
