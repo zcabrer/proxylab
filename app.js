@@ -1,68 +1,67 @@
-const express = require('express');
-const expressWs = require('express-ws'); // websocket support for live log tool
-const { morganMiddleware, format } = require('./middleware/morgan');
-const { logStream } = require('./utils/logStream'); // log stream utility for live log tool
-const app = express();
+// Built-in modules
 const path = require('path');
-const router = require('./routes/router');
-const https = require('https');
 const fs = require('fs');
 const http = require('http');
-require('dotenv').config();
-const morgan = require('morgan');
+const https = require('https');
 
-// Generate the download files at startup
+// Third-party modules
+const express = require('express');
+const expressWs = require('express-ws');
+const morgan = require('morgan');
+require('dotenv').config();
+
+// Local modules
+const { morganMiddleware, format } = require('./middleware/morgan');
+const { logStream } = require('./utils/logStream');
+const { getCertificateFromKeyVault } = require('./utils/keyVaultUtils');
 const generateDownloadFiles = require('./utils/generateDownloads');
+const bodyParserMiddleware = require('./middleware/bodyparser');
+const versionMiddleware = require('./middleware/version');
+const { sessionMiddleware } = require('./middleware/auth');
+const router = require('./routes/router');
+const logRoute = require('./routes/admincenter/log-route');
+
+// Constants
+const HTTPPORT = process.env.HTTPPORT || 8080;
+const HTTPSPORT = process.env.HTTPSPORT || 8443;
+const USE_KEYVAULT = process.env.USE_KEYVAULT?.toLowerCase() === 'true';
+
+// Initialize Express app
+const app = express();
+
+// Generate download files at startup
 generateDownloadFiles();
 
 // Set EJS as the template engine
 app.set('view engine', 'ejs');
 
-// Serve static files from the "public" directory
+// Serve static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Import bodyparser middleware for parsing incoming request bodies
-const bodyParserMiddleware = require('./middleware/bodyparser');
+// Middleware setup
 bodyParserMiddleware(app);
-
-// Use Morgan with the custom format for console logging
 app.use(morganMiddleware);
-
-// Use Morgan with the custom format for logStream
 app.use(morgan(format, { stream: logStream }));
-
-// Use version middleware to add the version to the EJS templates
-const versionMiddleware = require('./middleware/version');
 app.use(versionMiddleware);
-
-// Set up authentication session middleware
-const { sessionMiddleware } = require('./middleware/auth');
 app.use(sessionMiddleware);
 
-// Import the router module
+// Route setup
 app.use('/', router);
-
-const logRoute = require('./routes/admincenter/log-route');
 app.use('/admincenter/log', logRoute);
 
-// Initialize WebSocket for HTTP server
+// HTTP server setup
 const httpServer = http.createServer(app);
 expressWs(app, httpServer);
-
-// Start the HTTP server
-const httpport = process.env.HTTPPORT || 8080;
-httpServer.listen(httpport, () => {
-  console.log(`HTTP Server is running on port ${httpport}`);
+httpServer.listen(HTTPPORT, () => {
+  console.log(`HTTP Server is running on port ${HTTPPORT}`);
 });
 
-// Initialize WebSocket for HTTPS server
-const { getCertificateFromKeyVault } = require('./utils/keyVaultUtils'); // Import the Key Vault utility
-let httpsServer;
-(async () => {
+// HTTPS server setup
+(async function initializeHttpsServer() {
   try {
     let credentials;
 
-    if (process.env.USE_KEYVAULT === 'true' || process.env.USE_KEYVAULT === 'True') {
+    if (USE_KEYVAULT) {
       // Fetch certificate from Azure Key Vault
       credentials = await getCertificateFromKeyVault();
     } else {
@@ -70,15 +69,14 @@ let httpsServer;
       const pfxPath = path.join(__dirname, 'certs/certificate.pfx');
       const password = process.env.PFX_PASSWORD;
       const pfx = fs.readFileSync(pfxPath);
-      credentials = { pfx: pfx, passphrase: password };
+      credentials = { pfx, passphrase: password };
     }
 
-    const httpsport = process.env.HTTPSPORT || 8443;
-    httpsServer = https.createServer(credentials, app);
+    const httpsServer = https.createServer(credentials, app);
     expressWs(app, httpsServer);
 
-    httpsServer.listen(httpsport, () => {
-      console.log(`HTTPS Server is running on port ${httpsport}`);
+    httpsServer.listen(HTTPSPORT, () => {
+      console.log(`HTTPS Server is running on port ${HTTPSPORT}`);
     });
   } catch (error) {
     console.error('Could not start HTTPS server:', error.message);
