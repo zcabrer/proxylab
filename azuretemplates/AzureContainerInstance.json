@@ -65,7 +65,7 @@
           {
             "name": "[parameters('containerName')]",
             "properties": {
-              "image": "proxylab.azurecr.io/proxylab:v0.0.3",
+              "image": "proxylab.azurecr.io/proxylab:v0.0.2-test",
               "ports": [
                 {
                   "protocol": "TCP",

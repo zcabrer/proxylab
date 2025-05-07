@@ -39,6 +39,12 @@ ProxyLab is a versatile tool designed for testing and debugging HTTP/HTTPS reque
 
 ### Azure Deployments
 
+### Deploy to Azure Linux VM
+
+Use the following button to deploy the application to an Azure Ubuntu Linux VM. The app runs inside the VM as a docker container.
+
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fzcabrer%2Fproxylab%2Frefs%2Fheads%2Fdev%2Fazuretemplates%2FAzureVM.json)
+
 ### Deploy to Azure Container Instance(ACI)
 
 You can use the following button to deploy the container to an Azure Container Instance (ACI) with a single click:
