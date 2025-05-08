@@ -1,6 +1,3 @@
-@description('Version of proxylab to deploy')
-param appVersion string = 'v0.0.2-test'
-
 @description('Name of the virtual machine.')
 param virtualMachineName string
 
