@@ -1,39 +1,39 @@
-// Name of the container instance. Must be unique within the resource group.
+@description('Name of the container instance. Must be unique within the resource group.')
 param containerName string
 
-// Azure region where the container instance will be deployed (e.g., 'eastus', 'westus').
-param location string
+@description('Azure region where the container instance will be deployed (e.g., eastus, westus). Default is the resource group location.')
+param location string = resourceGroup().location
 
-// Port for HTTP traffic. Default is 80.
+@description('Port for HTTP traffic. Default is 80.')
 param httpPort int = 80
 
-// Port for HTTPS traffic. Default is 443.
+@description('Port for HTTPS traffic. Default is 443.')
 param httpsPort int = 443
 
-// Username for the application admin tools.
+@description('Username for the application admin tools.')
 param username string
 
-// Secure password for the application admin tools.
+@description('Secure password for the application admin tools.')
 @secure()
 param password string
 
-// Enable or disable logging to Log Analytics. Set to true to enable logging.
+@description('Enable or disable logging to Log Analytics. Set to true to enable logging.')
 param enableLogging bool
 
-// Log Analytics Workspace ID. Required if enableLogging is true. Locate the workspace ID in the Azure portal under the Log Analytics workspace -> Settings -> Agents management -> Log Analytics agent instructions dropdown -> Workspace ID.
+@description('Log Analytics Workspace ID. Required if enableLogging is true. Locate the workspace ID in the Azure portal under the Log Analytics workspace -> Settings -> Agents management -> Log Analytics agent instructions dropdown -> Workspace ID.')
 param logAnalyticsWorkspaceId string = ''
 
-// Log Analytics Workspace Key. Required if enableLogging is true. Locate the workspace key in the Azure portal under the Log Analytics workspace -> Settings -> Agents management -> Log Analytics agent instructions dropdown -> Primary Key
+@description('Log Analytics Workspace Key. Required if enableLogging is true. Locate the workspace key in the Azure portal under the Log Analytics workspace -> Settings -> Agents management -> Log Analytics agent instructions dropdown -> Primary Key')
 @secure()
 param logAnalyticsWorkspaceKey string = ''
 
-// Enable or disable pulling certificates from Azure Key Vault.
+@description('Enable or disable pulling certificates from Azure Key Vault.')
 param useKeyVault bool
 
-// Azure Key Vault name. Required if useKeyVault is true.
+@description('Azure Key Vault name. Required if useKeyVault is true.')
 param keyVaultName string = ''
 
-// Azure Key Vault certificate name. Required if useKeyVault is true.
+@description('Azure Key Vault certificate name. Required if useKeyVault is true.')
 param keyVaultCertificateName string = ''
 
 
@@ -49,7 +49,7 @@ resource containerGroups_aci_proxylab_dev_name_resource 'Microsoft.ContainerInst
       {
         name: containerName
         properties: {
-          image: 'proxylab.azurecr.io/proxylab:v0.0.3'
+          image: 'proxylab.azurecr.io/proxylab:latest'
           ports: [
             {
               protocol: 'TCP'

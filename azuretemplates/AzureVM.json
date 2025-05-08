@@ -5,26 +5,42 @@
     "_generator": {
       "name": "bicep",
       "version": "0.35.1.17967",
-      "templateHash": "3990958705400320560"
+      "templateHash": "9636318760275231756"
     }
   },
   "parameters": {
+    "appVersion": {
+      "type": "string",
+      "defaultValue": "v0.0.2-test",
+      "metadata": {
+        "description": "Version of proxylab to deploy"
+      }
+    },
     "virtualMachineName": {
-      "type": "string"
-    },
-    "httpPort": {
       "type": "string",
-      "defaultValue": "8080"
-    },
-    "httpsPort": {
-      "type": "string",
-      "defaultValue": "8443"
+      "metadata": {
+        "description": "Name of the virtual machine."
+      }
     },
     "location": {
       "type": "string",
       "defaultValue": "[resourceGroup().location]",
       "metadata": {
-        "description": "Location for all resources."
+        "description": "Location for all resources (e.g., eastus, westus). Default is the resource group location."
+      }
+    },
+    "httpPort": {
+      "type": "string",
+      "defaultValue": "8080",
+      "metadata": {
+        "description": "Port number for HTTP traffic."
+      }
+    },
+    "httpsPort": {
+      "type": "string",
+      "defaultValue": "8443",
+      "metadata": {
+        "description": "Port number for HTTPS traffic."
       }
     },
     "vmSize": {
@@ -43,27 +59,13 @@
     "virtualNetworkName": {
       "type": "string",
       "metadata": {
-        "description": "Name of the existing virtual network (required if useExistingVNet is true)."
+        "description": "Name of the virtual network (used for both existing and new VNet)."
       }
     },
     "subnetName": {
       "type": "string",
       "metadata": {
-        "description": "Name of the existing subnet (required if useExistingVNet is true)."
-      }
-    },
-    "newVirtualNetworkName": {
-      "type": "string",
-      "defaultValue": "vnet-proxylab",
-      "metadata": {
-        "description": "Name of the new virtual network (used if useExistingVNet is false)."
-      }
-    },
-    "newSubnetName": {
-      "type": "string",
-      "defaultValue": "snet-application",
-      "metadata": {
-        "description": "Name of the new subnet (used if useExistingVNet is false)."
+        "description": "Name of the subnet (used for both existing and new subnet)."
       }
     },
     "newVnetAddressPrefix": {
@@ -80,13 +82,6 @@
         "description": "Address prefix for the new subnet (used if useExistingVNet is false)."
       }
     },
-    "appVersion": {
-      "type": "string",
-      "defaultValue": "v0.0.2-test",
-      "metadata": {
-        "description": "Version of proxylab to deploy"
-      }
-    },
     "adminUsername": {
       "type": "string",
       "metadata": {
@@ -101,16 +96,14 @@
     }
   },
   "variables": {
-    "effectiveVnetName": "[if(parameters('useExistingVNet'), parameters('virtualNetworkName'), parameters('newVirtualNetworkName'))]",
-    "effectiveSubnetName": "[if(parameters('useExistingVNet'), parameters('subnetName'), parameters('newSubnetName'))]",
-    "subnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('effectiveVnetName'), variables('effectiveSubnetName'))]"
+    "subnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]"
   },
   "resources": [
     {
       "condition": "[not(parameters('useExistingVNet'))]",
       "type": "Microsoft.Network/virtualNetworks",
       "apiVersion": "2021-05-01",
-      "name": "[parameters('newVirtualNetworkName')]",
+      "name": "[parameters('virtualNetworkName')]",
       "location": "[parameters('location')]",
       "properties": {
         "addressSpace": {
@@ -120,7 +113,7 @@
         },
         "subnets": [
           {
-            "name": "[parameters('newSubnetName')]",
+            "name": "[parameters('subnetName')]",
             "properties": {
               "addressPrefix": "[parameters('newSubnetPrefix')]"
             }
@@ -244,7 +237,7 @@
         "autoUpgradeMinorVersion": true,
         "settings": {
           "fileUris": [],
-          "commandToExecute": "[format('bash -c \"curl -fsSL https://get.docker.com | sh && systemctl enable docker && systemctl start docker && docker run --restart unless-stopped -d -p {0}:{1} -p {2}:{3} -e HTTPPORT={4} -e HTTPSPORT={5} -e USER={6} -e PASSWORD={7} -e USE_KEYVAULT=false proxylab.azurecr.io/proxylab:{8}\"', parameters('httpPort'), parameters('httpPort'), parameters('httpsPort'), parameters('httpsPort'), parameters('httpPort'), parameters('httpsPort'), parameters('adminUsername'), parameters('adminPassword'), parameters('appVersion'))]"
+          "commandToExecute": "[format('bash -c \"curl -fsSL https://get.docker.com | sh && systemctl enable docker && systemctl start docker && docker run --restart unless-stopped -d -p {0}:{1} -p {2}:{3} -e HTTPPORT={4} -e HTTPSPORT={5} -e USER={6} -e PASSWORD={7} proxylab.azurecr.io/proxylab:latest\"', parameters('httpPort'), parameters('httpPort'), parameters('httpsPort'), parameters('httpsPort'), parameters('httpPort'), parameters('httpsPort'), parameters('adminUsername'), parameters('adminPassword'))]"
         }
       },
       "dependsOn": [

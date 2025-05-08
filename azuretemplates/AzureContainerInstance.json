@@ -4,52 +4,89 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.34.44.8038",
-      "templateHash": "2524399718216289828"
+      "version": "0.35.1.17967",
+      "templateHash": "16203568964290025762"
     }
   },
   "parameters": {
     "containerName": {
-      "type": "string"
+      "type": "string",
+      "metadata": {
+        "description": "Name of the container instance. Must be unique within the resource group."
+      }
     },
     "location": {
-      "type": "string"
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "Azure region where the container instance will be deployed (e.g., eastus, westus). Default is the resource group location."
+      }
     },
     "httpPort": {
       "type": "int",
-      "defaultValue": 80
+      "defaultValue": 80,
+      "metadata": {
+        "description": "Port for HTTP traffic. Default is 80."
+      }
     },
     "httpsPort": {
       "type": "int",
-      "defaultValue": 443
+      "defaultValue": 443,
+      "metadata": {
+        "description": "Port for HTTPS traffic. Default is 443."
+      }
     },
     "username": {
-      "type": "string"
+      "type": "string",
+      "metadata": {
+        "description": "Username for the application admin tools."
+      }
     },
     "password": {
-      "type": "securestring"
+      "type": "securestring",
+      "metadata": {
+        "description": "Secure password for the application admin tools."
+      }
     },
     "enableLogging": {
-      "type": "bool"
+      "type": "bool",
+      "metadata": {
+        "description": "Enable or disable logging to Log Analytics. Set to true to enable logging."
+      }
     },
     "logAnalyticsWorkspaceId": {
       "type": "string",
-      "defaultValue": ""
+      "defaultValue": "",
+      "metadata": {
+        "description": "Log Analytics Workspace ID. Required if enableLogging is true. Locate the workspace ID in the Azure portal under the Log Analytics workspace -> Settings -> Agents management -> Log Analytics agent instructions dropdown -> Workspace ID."
+      }
     },
     "logAnalyticsWorkspaceKey": {
       "type": "securestring",
-      "defaultValue": ""
+      "defaultValue": "",
+      "metadata": {
+        "description": "Log Analytics Workspace Key. Required if enableLogging is true. Locate the workspace key in the Azure portal under the Log Analytics workspace -> Settings -> Agents management -> Log Analytics agent instructions dropdown -> Primary Key"
+      }
     },
     "useKeyVault": {
-      "type": "bool"
+      "type": "bool",
+      "metadata": {
+        "description": "Enable or disable pulling certificates from Azure Key Vault."
+      }
     },
     "keyVaultName": {
       "type": "string",
-      "defaultValue": ""
+      "defaultValue": "",
+      "metadata": {
+        "description": "Azure Key Vault name. Required if useKeyVault is true."
+      }
     },
     "keyVaultCertificateName": {
       "type": "string",
-      "defaultValue": ""
+      "defaultValue": "",
+      "metadata": {
+        "description": "Azure Key Vault certificate name. Required if useKeyVault is true."
+      }
     }
   },
   "resources": [
@@ -65,7 +102,7 @@
           {
             "name": "[parameters('containerName')]",
             "properties": {
-              "image": "proxylab.azurecr.io/proxylab:v0.0.2-test",
+              "image": "proxylab.azurecr.io/proxylab:latest",
               "ports": [
                 {
                   "protocol": "TCP",

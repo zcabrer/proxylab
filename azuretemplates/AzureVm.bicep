@@ -1,9 +1,17 @@
-param virtualMachineName string
-param httpPort string = '8080'
-param httpsPort string = '8443'
+@description('Version of proxylab to deploy')
+param appVersion string = 'v0.0.2-test'
 
-@description('Location for all resources.')
+@description('Name of the virtual machine.')
+param virtualMachineName string
+
+@description('Location for all resources (e.g., eastus, westus). Default is the resource group location.')
 param location string = resourceGroup().location
+
+@description('Port number for HTTP traffic.')
+param httpPort string = '8080'
+
+@description('Port number for HTTPS traffic.')
+param httpsPort string = '8443'
 
 @description('Size of the virtual machine.')
 param vmSize string = 'Standard_B8ls_v2'
@@ -11,26 +19,17 @@ param vmSize string = 'Standard_B8ls_v2'
 @description('Deploy VM to an existing VNet? If false, a new VNet and subnet will be created.')
 param useExistingVNet bool
 
-@description('Name of the existing virtual network (required if useExistingVNet is true).')
+@description('Name of the virtual network (used for both existing and new VNet).')
 param virtualNetworkName string
 
-@description('Name of the existing subnet (required if useExistingVNet is true).')
+@description('Name of the subnet (used for both existing and new subnet).')
 param subnetName string
-
-@description('Name of the new virtual network (used if useExistingVNet is false).')
-param newVirtualNetworkName string = 'vnet-proxylab'
-
-@description('Name of the new subnet (used if useExistingVNet is false).')
-param newSubnetName string = 'snet-application'
 
 @description('Address prefix for the new virtual network (used if useExistingVNet is false).')
 param newVnetAddressPrefix string = '10.0.0.0/16'
 
 @description('Address prefix for the new subnet (used if useExistingVNet is false).')
 param newSubnetPrefix string = '10.0.1.0/24'
-
-@description('Version of proxylab to deploy')
-param appVersion string = 'v0.0.2-test'
 
 @description('Username for server admin account and also to access the application admin tools')
 param adminUsername string
@@ -39,10 +38,8 @@ param adminUsername string
 @secure()
 param adminPassword string
 
-
-
 resource vnet 'Microsoft.Network/virtualNetworks@2021-05-01' = if (!useExistingVNet) {
-  name: newVirtualNetworkName
+  name: virtualNetworkName
   location: location
   properties: {
     addressSpace: {
@@ -52,7 +49,7 @@ resource vnet 'Microsoft.Network/virtualNetworks@2021-05-01' = if (!useExistingV
     }
     subnets: [
       {
-        name: newSubnetName
+        name: subnetName
         properties: {
           addressPrefix: newSubnetPrefix
         }
@@ -61,10 +58,7 @@ resource vnet 'Microsoft.Network/virtualNetworks@2021-05-01' = if (!useExistingV
   }
 }
 
-// Choose VNet and subnet names/IDs based on useExistingVNet
-var effectiveVnetName = useExistingVNet ? virtualNetworkName : newVirtualNetworkName
-var effectiveSubnetName = useExistingVNet ? subnetName : newSubnetName
-var subnetResourceId = resourceId('Microsoft.Network/virtualNetworks/subnets', effectiveVnetName, effectiveSubnetName)
+var subnetResourceId = resourceId('Microsoft.Network/virtualNetworks/subnets', virtualNetworkName, subnetName)
 
 resource virtualMachine 'Microsoft.Compute/virtualMachines@2021-11-01' = {
   name: virtualMachineName
@@ -173,7 +167,7 @@ resource installDocker 'Microsoft.Compute/virtualMachines/extensions@2021-11-01'
     autoUpgradeMinorVersion: true
     settings: {
       fileUris: []
-      commandToExecute: 'bash -c "curl -fsSL https://get.docker.com | sh && systemctl enable docker && systemctl start docker && docker run --restart unless-stopped -d -p ${httpPort}:${httpPort} -p ${httpsPort}:${httpsPort} -e HTTPPORT=${httpPort} -e HTTPSPORT=${httpsPort} -e USER=${adminUsername} -e PASSWORD=${adminPassword} -e USE_KEYVAULT=false proxylab.azurecr.io/proxylab:${appVersion}"'
+      commandToExecute: 'bash -c "curl -fsSL https://get.docker.com | sh && systemctl enable docker && systemctl start docker && docker run --restart unless-stopped -d -p ${httpPort}:${httpPort} -p ${httpsPort}:${httpsPort} -e HTTPPORT=${httpPort} -e HTTPSPORT=${httpsPort} -e USER=${adminUsername} -e PASSWORD=${adminPassword} proxylab.azurecr.io/proxylab:latest"'
     }
   }
 }

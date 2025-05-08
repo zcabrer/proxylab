@@ -1,0 +1,176 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.35.1.17967",
+      "templateHash": "3435817382082809091"
+    }
+  },
+  "parameters": {
+    "name": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the web application."
+      }
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "The location/region where the resources will be deployed. (e.g., eastus, westus). Default is the resource group location."
+      }
+    },
+    "useExistingAppServicePlan": {
+      "type": "bool",
+      "defaultValue": true,
+      "allowedValues": [
+        true,
+        false
+      ],
+      "metadata": {
+        "description": "Indicates whether to use an existing App Service Plan."
+      }
+    },
+    "appServicePlanName": {
+      "type": "string",
+      "minLength": 1,
+      "metadata": {
+        "description": "The name of the App Service Plan to use or create."
+      }
+    },
+    "appServicePlanResourceGroup": {
+      "type": "string",
+      "minLength": 1,
+      "metadata": {
+        "description": "The resource group of the existing App Service Plan, if applicable."
+      }
+    },
+    "adminUsername": {
+      "type": "string",
+      "metadata": {
+        "description": "Username for server admin account and also to access the application admin tools"
+      }
+    },
+    "adminPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Password for server admin account and also to access the application admin tools"
+      }
+    }
+  },
+  "variables": {
+    "serverFarmResourceId": "[if(parameters('useExistingAppServicePlan'), resourceId(parameters('appServicePlanResourceGroup'), 'Microsoft.Web/serverfarms', parameters('appServicePlanName')), resourceId('Microsoft.Web/serverfarms', parameters('appServicePlanName')))]"
+  },
+  "resources": [
+    {
+      "condition": "[not(parameters('useExistingAppServicePlan'))]",
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2022-03-01",
+      "name": "[parameters('appServicePlanName')]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "B1",
+        "tier": "Basic",
+        "size": "B1",
+        "family": "B",
+        "capacity": 1
+      },
+      "kind": "linux",
+      "properties": {
+        "perSiteScaling": false,
+        "elasticScaleEnabled": false,
+        "maximumElasticWorkerCount": 1,
+        "isSpot": false,
+        "reserved": true,
+        "isXenon": false,
+        "hyperV": false,
+        "targetWorkerCount": 0,
+        "targetWorkerSizeId": 0,
+        "zoneRedundant": false
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2022-03-01",
+      "name": "[parameters('name')]",
+      "location": "[parameters('location')]",
+      "tags": {},
+      "properties": {
+        "name": "[parameters('name')]",
+        "siteConfig": {
+          "appSettings": [
+            {
+              "name": "WEBSITES_ENABLE_APP_SERVICE_STORAGE",
+              "value": "false"
+            },
+            {
+              "name": "HTTPPORT",
+              "value": "8080"
+            },
+            {
+              "name": "USER",
+              "value": "[parameters('adminUsername')]"
+            },
+            {
+              "name": "PASSWORD",
+              "value": "[parameters('adminPassword')]"
+            }
+          ],
+          "linuxFxVersion": "sitecontainers",
+          "alwaysOn": false,
+          "ftpsState": "FtpsOnly"
+        },
+        "serverFarmId": "[variables('serverFarmResourceId')]",
+        "clientAffinityEnabled": false,
+        "virtualNetworkSubnetId": null,
+        "httpsOnly": true,
+        "publicNetworkAccess": "Enabled"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', parameters('appServicePlanName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Web/sites/basicPublishingCredentialsPolicies",
+      "apiVersion": "2022-09-01",
+      "name": "[format('{0}/{1}', parameters('name'), 'scm')]",
+      "properties": {
+        "allow": false
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', parameters('name'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Web/sites/basicPublishingCredentialsPolicies",
+      "apiVersion": "2022-09-01",
+      "name": "[format('{0}/{1}', parameters('name'), 'ftp')]",
+      "properties": {
+        "allow": false
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', parameters('name'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Web/sites/sitecontainers",
+      "apiVersion": "2021-02-01",
+      "name": "[format('{0}/{1}', parameters('name'), 'main')]",
+      "properties": {
+        "image": "proxylab.azurecr.io/proxylab:latest",
+        "targetPort": "8080",
+        "isMain": true,
+        "startUpCommand": "",
+        "authType": "Anonymous",
+        "userManagedIdentityClientId": null,
+        "userName": null,
+        "passwordSecret": null
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', parameters('name'))]"
+      ]
+    }
+  ]
+}
