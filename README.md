@@ -19,9 +19,30 @@ ProxyLab is a versatile tool designed for testing and debugging HTTP/HTTPS reque
 
 ## Deployments
 
+### Azure Deployments
+
+### Deploy to Azure Linux VM
+
+Use the following button to deploy the application to an Azure Ubuntu Linux VM. The app runs inside the VM as a docker container. [Detailed deployment guide](https://github.com/zcabrer/proxylab/wiki/Deployment-Guides#azure-linux-vm).
+
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fzcabrer%2Fproxylab%2Frefs%2Fheads%2Fdev%2Fazuretemplates%2FAzureVm.json)
+
+### Deploy to Azure Container Instance
+
+You can use the following button to deploy the container to an Azure Container Instance with a single click. [Detailed deployment guide](https://github.com/zcabrer/proxylab/wiki/Deployment-Guides#azure-container-instance-aci).
+
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fzcabrer%2Fproxylab%2Frefs%2Fheads%2Fdev%2Fazuretemplates%2FAzureContainerInstance.json)
+
+### Deploy to Azure App Service (for Containers)
+
+You can use the following button to deploy the container to an Azure App Service for Containers with a single click. [Detailed deployment guide](https://github.com/zcabrer/proxylab/wiki/Deployment-Guides#azure-app-service).
+
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fzcabrer%2Fproxylab%2Frefs%2Fheads%2Fdev%2Fazuretemplates%2FAzureWebapp.json)
+
 ### Local Deployment
 
 (Prerequisite: Docker installed on your machine)
+[Detailed deployment guide](https://github.com/zcabrer/proxylab/wiki/Deployment-Guides#local-docker-deployment)
 
 1. Clone the repository to your machine.
 2. Rename the ```.env.example``` file to ```.env``` and update the environment variables within
@@ -36,26 +57,6 @@ ProxyLab is a versatile tool designed for testing and debugging HTTP/HTTPS reque
    ```bash
    docker run -p 8080:8080 --env-file .env proxylab
    ```
-
-### Azure Deployments
-
-### Deploy to Azure Linux VM
-
-Use the following button to deploy the application to an Azure Ubuntu Linux VM. The app runs inside the VM as a docker container. [Detailed deployment guide](https://github.com/zcabrer/proxylab/wiki/Deployment-Guides#azure-linux-vm).
-
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fzcabrer%2Fproxylab%2Frefs%2Fheads%2Fdev%2Fazuretemplates%2FAzureVm.json)
-
-### Deploy to Azure Container Instance(ACI)
-
-You can use the following button to deploy the container to an Azure Container Instance (ACI) with a single click. [Detailed deployment guide](https://github.com/zcabrer/proxylab/wiki/Deployment-Guides#azure-container-instance-aci).
-
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fzcabrer%2Fproxylab%2Frefs%2Fheads%2Fdev%2Fazuretemplates%2FAzureContainerInstance.json)
-
-### Deploy to Azure App Service (for Containers)
-
-You can use the following button to deploy the container to an Azure App Service for Containers with a single click. [Detailed deployment guide](https://github.com/zcabrer/proxylab/wiki/Deployment-Guides#azure-app-service).
-
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fzcabrer%2Fproxylab%2Frefs%2Fheads%2Fdev%2Fazuretemplates%2FAzureWebapp.json)
 
 ## Contributing
 
