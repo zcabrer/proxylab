@@ -20,6 +20,12 @@ router.get('/', (req, res) => {
 
     let respHeaders = res.getHeaders();
 
+    // Get the remote address and strip ::ffff: if present
+    let rawRemoteAddress = res.req._remoteAddress;
+    let remoteAddress = rawRemoteAddress && rawRemoteAddress.startsWith('::ffff:')
+        ? rawRemoteAddress.replace('::ffff:', '')
+        : rawRemoteAddress;
+
     try {
         res.status(200); // Set the status code to 200 (OK)
         res.render('tools/headers', { 
@@ -28,7 +34,7 @@ router.get('/', (req, res) => {
             respHeaders: respHeaders,
             method: req.method,
             url: req.protocol + "://" + reqHeaders.host + req.originalUrl,
-            remoteAddress: res.req._remoteAddress,
+            remoteAddress: remoteAddress,
             status: res.statusCode,
             headerActive: true,
             query: req.query // Pass query parameters to the template

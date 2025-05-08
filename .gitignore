@@ -15,7 +15,9 @@ node_modules/
 # Packet Capture Files
 *.pcap
 
-# Ignore large files
+# Ignore download files
+1MB.txt
+10MB.txt
 1GB.txt
 100MB.txt
 
