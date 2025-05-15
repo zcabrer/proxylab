@@ -20,6 +20,7 @@ const versionMiddleware = require('./middleware/version');
 const { sessionMiddleware } = require('./middleware/auth');
 const router = require('./routes/router');
 const logRoute = require('./routes/admincenter/log-route');
+const faviconMiddleware = require('./middleware/favicon');
 
 // Constants
 const HTTPPORT = process.env.HTTPPORT || 8080;
@@ -37,6 +38,9 @@ app.set('view engine', 'ejs');
 
 // Serve static files
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Serve favicons for any path containing "/favicon/"
+app.use(faviconMiddleware);
 
 // Middleware setup
 bodyParserMiddleware(app);

@@ -1,5 +1,18 @@
 const express = require('express');
+const path = require('path');
 const router = express.Router();
+
+// Set faviconBasePath for all routes based on the current path
+router.use((req, res, next) => {
+    // Use originalUrl to get the full path, strip query/hash, and trailing slash
+    let basePath = req.originalUrl.split('?')[0].split('#')[0];
+    if (basePath.endsWith('/')) basePath = basePath.slice(0, -1);
+    // Remove /favicon and anything after it if present
+    basePath = basePath.replace(/\/favicon.*/, '');
+    // If root, fallback to /favicon
+    res.locals.faviconBasePath = basePath ? `${basePath}/favicon` : '/favicon';
+    next();
+});
 
 // Import route handlers
 const home = require('./home-route');
