@@ -14,6 +14,38 @@ router.use((req, res, next) => {
     next();
 });
 
+// Serve /tools/*.js from public/js
+router.get('/tools/:jsfile.js', (req, res, next) => {
+    const fs = require('fs');
+    const jsFile = req.params.jsfile;
+    const filePath = path.join(__dirname, '../public/js', `${jsFile}.js`);
+    fs.access(filePath, fs.constants.F_OK, (err) => {
+        if (err) return next();
+        res.sendFile(filePath, err => {
+            if (err) {
+                console.error(`Error sending ${jsFile}.js:`, err);
+                res.status(500).send(`Error sending ${jsFile}.js`);
+            }
+        });
+    });
+});
+
+// Serve /admincenter/*.js from public/js
+router.get('/admincenter/:jsfile.js', (req, res, next) => {
+    const fs = require('fs');
+    const jsFile = req.params.jsfile;
+    const filePath = path.join(__dirname, '../public/js', `${jsFile}.js`);
+    fs.access(filePath, fs.constants.F_OK, (err) => {
+        if (err) return next();
+        res.sendFile(filePath, err => {
+            if (err) {
+                console.error(`Error sending ${jsFile}.js:`, err);
+                res.status(500).send(`Error sending ${jsFile}.js`);
+            }
+        });
+    });
+});
+
 // Import route handlers
 const home = require('./home-route');
 const tools = require('./tools/tools-route');

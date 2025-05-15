@@ -43,15 +43,6 @@ router.get('/downloads/:size', (req, res) => {
   });
 });
 
-// Serve files.js
-router.get('/files.js', (req, res) => {
-  const filePath = path.join(__dirname, '../../public/js/files.js');
-  res.sendFile(filePath, err => {
-    if (err) {
-      console.error('Error sending files.js:', err);
-      res.status(500).send('Error sending files.js');
-    }
-  });
-});
+
 
 module.exports = router;
