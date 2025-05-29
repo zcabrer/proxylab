@@ -26,6 +26,8 @@ const faviconMiddleware = require('./middleware/favicon');
 const HTTPPORT = process.env.HTTPPORT || 8080;
 const HTTPSPORT = process.env.HTTPSPORT || 8443;
 const USE_KEYVAULT = process.env.USE_KEYVAULT?.toLowerCase() === 'true';
+const USE_K8S_SECRET = process.env.USE_K8S_SECRET?.toLowerCase() === 'true';
+
 
 // Initialize Express app
 const app = express();
@@ -68,6 +70,13 @@ httpServer.listen(HTTPPORT, () => {
     if (USE_KEYVAULT) {
       // Fetch certificate from Azure Key Vault
       credentials = await getCertificateFromKeyVault();
+    } else if (USE_K8S_SECRET) {
+      // Load certificate and key from Kubernetes secret mount
+      const certPath = '/mnt/tls/tls.crt';
+      const keyPath = '/mnt/tls/tls.key';
+      const cert = fs.readFileSync(certPath);
+      const key = fs.readFileSync(keyPath);
+      credentials = { cert, key };
     } else {
       // Use manually uploaded certificate
       const pfxPath = path.join(__dirname, 'certs/certificate.pfx');
