@@ -35,7 +35,12 @@ You can use the following button to deploy the container to an Azure Container I
 
 ### Deploy to Azure Kubernetes Service (AKS)
 
-Follow the [detailed deployment guide](https://github.com/zcabrer/proxylab/wiki/Deployment-Guides#azure-kubernetes-service-aks), which leverages sample .yaml deployment manifests .
+Follow the [detailed deployment guide](https://github.com/zcabrer/proxylab/wiki/Deployment-Guides#azure-kubernetes-service-aks), which leverages sample .yaml deployment manifests.
+
+[HTTP sample .yaml](https://raw.githubusercontent.com/zcabrer/proxylab/refs/heads/dev/azuretemplates/manifest-http.yaml)
+
+[HTTPS sample .yaml](https://raw.githubusercontent.com/zcabrer/proxylab/refs/heads/dev/azuretemplates/manifest-https.yaml)
+
 
 ### Deploy to Azure App Service (for Containers)
 
