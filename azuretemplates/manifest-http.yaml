@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: proxylab
+  namespace: proxylab
+  labels:
+    app: proxylab
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: proxylab
+  template:
+    metadata:
+      labels:
+        app: proxylab
+    spec:
+      containers:
+      - name: proxylab
+        image: proxylab.azurecr.io/proxylab:latest
+        ports:
+        - containerPort: 8080 # Edit with your HTTP port
+        env:
+        - name: HTTPPORT
+          value: "8080" # Edit with your HTTP port
+        - name: USER
+          value: "username_here" # Edit with your username
+        - name: PASSWORD
+          value: "password_here" # Edit with your password
+        - name: USE_K8S_SECRET
+          value: "false"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: proxylab
+  namespace: proxylab
+spec:
+  selector:
+    app: proxylab
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 8080 # Edit with your HTTP port - from ContainerPort in Deployment
